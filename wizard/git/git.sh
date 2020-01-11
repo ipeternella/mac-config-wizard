@@ -21,4 +21,5 @@ echo "[GIT]: Changing ssh config to automatically load the ssh-key..."
 echo "Appending config to ssh-config file..."
 echo "$SSH_KEYCHAIN_CONFIG" >> $SSH_FOLDER/config
 
-echo "[GIT]: A new SSH key has been created. Use it to configure a new SSH key on Github!"
+pbcopy < ~/.ssh/id_rsa.pub
+echo "[GIT]: A new SSH key pair has been created. The PUBLIC key has been copied to clipboard for Github ssh configuration!"
