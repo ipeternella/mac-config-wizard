@@ -7,7 +7,7 @@ function execute_all_scripts_in_folder_if_yes {
     # 
     # Arguments:
     #   $1: user input as string
-    #   $2: relative folder path - example: "./folder_name"
+    #   $2: relative folder path - example: ./folder_name (not a string)
     #
     # Returns:
     #   None
