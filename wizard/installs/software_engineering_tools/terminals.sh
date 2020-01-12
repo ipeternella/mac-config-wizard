@@ -51,5 +51,10 @@ then
     set value (eval echo $value)
 
     set -xg var $value  # <---- important new fish syntax
+
+    # for pyenv to work with fish
+    set PYENV_ROOT $HOME/.pyenv
+    set -x PATH $PYENV_ROOT/shims $PYENV_ROOT/versions $PATH
+    pyenv rehash
     end' >> ~/.config/omf/init.fish
 fi
