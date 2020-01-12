@@ -13,8 +13,8 @@ execute_all_scripts_in_folder_if_yes "$response" "$APPS_FOLDER"
 read -r -p "[WIZARD]: Install software engineering tools?" response
 execute_all_scripts_in_folder_if_yes "$response" "$SOFTWARE_ENGINEERING_TOOLS_FOLDER"
 
-read -r -p "[WIZARD]: Install cloud tools?" response
-execute_all_scripts_in_folder_if_yes "$response" "$CLOUD_TOOLS_FOLDER"
-
 read -r -p "[WIZARD]: Install K8s tools?" response
 execute_all_scripts_in_folder_if_yes "$response" "$K8S_TOOLS_FOLDER"
+
+read -r -p "[WIZARD]: Install cloud tools?" response
+execute_all_scripts_in_folder_if_yes "$response" "$CLOUD_TOOLS_FOLDER"
