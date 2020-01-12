@@ -10,6 +10,8 @@ fi
 read -r -p "[CLOUD TOOLS]: Would you like to configure awscli now? [y/n] " response
 if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
 then
+
+
     echo "Configuring authentication with AWS Services..."
     aws configure
 
@@ -17,6 +19,18 @@ then
     aws ecr get-login
 
     echo "For no token-refreshing authentication for ECR, visit: https://github.com/awslabs/amazon-ecr-credential-helper"
+
+    echo "Installing aws-iam-authenticator to use IAM for EKS cluster authentication..."
+    brew install aws-iam-authenticator
+
+    echo "Testing sts get-caller-identity token return..."
+    aws sts get-caller-identity
+
+    echo "Creating a new kubeconfig for cluster authentication with aws cli..."
+
+    read -r -p "[CLOUD TOOLS]: What is your AWS EKS region?" aws_region
+    read -r -p "[CLOUD TOOLS]: What is your EKS cluster name?" eks_cluster_name
+    aws eks --region $aws_region update-kubeconfig --name $eks_cluster_name
 fi
 
 
