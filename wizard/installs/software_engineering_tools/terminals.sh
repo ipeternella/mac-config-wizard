@@ -1,5 +1,10 @@
-read -r -p "[DEV UTILITIES]: Install Fish shell? [y/n] " response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+#------------------------------------------------------------
+# IDEs for coding software projects.
+# ------------------------------------------------------------
+source ./wizard/settings/settings.sh
+
+read -r -p "[SOFTWARE ENG. TOOLS]: Install Fish shell? [y/n] " response
+if [[ "$response" =~ $YES_REGEXP ]]
 then
     echo "Installing Fish..."
     brew install fish

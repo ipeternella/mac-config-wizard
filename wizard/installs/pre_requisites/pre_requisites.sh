@@ -1,3 +1,7 @@
+#------------------------------------------------------------
+# Pre-requisites required to run the installation process
+# such as homebrew.
+# ------------------------------------------------------------
 source ./wizard/settings/settings.sh
 
 read -r -p "[PRE REQUISITES]: Install brew? [y/n] " response
