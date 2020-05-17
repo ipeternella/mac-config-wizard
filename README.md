@@ -1,8 +1,10 @@
 # mac-config-wizard
 
-## Tired of configuring new MacOS machines? Well, I was...
+Tired of configuring new MacOS machines? Well, I was...
 
-Repo with shell scripts and other tools to configure new MacOS machines.
+![Alt text](docs/mac-config-wizard-demo.gif)
+
+Repo with shell scripts and other tools to configure new MacOS machines!
 
 ## Running the setup Wizard
 
