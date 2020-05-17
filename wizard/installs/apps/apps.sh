@@ -17,11 +17,18 @@ then
     brew cask install iterm2
 fi
 
-read -r -p "[APPS]: Install Alfred? [y/n] " response
+read -r -p "[APPS]: Install Alfred (Improved spotlight)? [y/n] " response
 if [[ "$response" =~ $YES_REGEXP ]]
 then
     echo "Installing Alfred..."
     brew cask install alfred
+fi
+
+read -r -p "[APPS]: Install Spectacle (Window organization tool for productivity)? [y/n] " response
+if [[ "$response" =~ $YES_REGEXP ]]
+then
+    echo "Installing Spectacle..."
+    brew cask install spectacle
 fi
 
 read -r -p "[APPS]: Install Slack? [y/n] " response
