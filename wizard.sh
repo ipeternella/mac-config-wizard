@@ -1,20 +1,166 @@
-#!/usr/bin/env bash
-source ./wizard/settings/settings.sh
-source ./wizard/utils/utils.sh
+#!/bin/bash
 
-echo "Welcome to the MacOS Wizard for Software Engineers!"
+################################################################################
+#                                 Installer                                    #
+#                                                                              #
+# A shell installer to help quickly setup a machine with some developer tools. #
+#                                                                              #
+#                                                                              #
+#                                                                              #
+################################################################################
+################################################################################
+################################################################################
+#                                                                              #
+################################################################################
+################################################################################
+################################################################################
 
-read -r -p "[WIZARD]: Install pre-requisites? " response
-execute_all_scripts_in_folder_if_yes "$response" "$PRE_REQUISITES_FOLDER"
+################################################################################
+# Help                                                                         #
+################################################################################
+help() {
+  # Display Help
+  echo "Add description of the script functions here."
+  echo
+  echo "Syntax: scriptTemplate [-h]"
+  echo "options:"
+  echo "h     Print this Help."
+  echo
+}
 
-read -r -p "[WIZARD]: Install apps with GUI? " response
-execute_all_scripts_in_folder_if_yes "$response" "$APPS_FOLDER"
+################################################################################
+# Check for root.                                                              #
+################################################################################
+check_for_root() {
+  # If we are not running as root we exit the program
+  if [ "$(id -u)" != 0 ]; then
+    echo "ERROR: You must be root user to run this program"
+    exit
+  fi
+}
 
-read -r -p "[WIZARD]: Install software engineering tools? " response
-execute_all_scripts_in_folder_if_yes "$response" "$SOFTWARE_ENGINEERING_TOOLS_FOLDER"
+################################################################################
 
-read -r -p "[WIZARD]: Install K8s tools? " response
-execute_all_scripts_in_folder_if_yes "$response" "$K8S_TOOLS_FOLDER"
+################################################################################
+# Check OS.                                                              #
+################################################################################
+check_os() {
+  # If we are not running as root we exit the program
+  local uname_os
+  uname_os="$(uname -s)"
+  case "${uname_os}" in
+  Linux*)
+    MACHINE=Linux
+    ;;
+  Darwin*)
+    MACHINE=Mac
+    ;;
+  CYGWIN*)
+    MACHINE=Cygwin
+    ;;
+  MINGW*)
+    MACHINE=MinGw
+    ;;
+  *)
+    MACHINE="UNKNOWN:${uname_os}"
+    ;;
+  esac
+}
 
-read -r -p "[WIZARD]: Install cloud tools? " response
-execute_all_scripts_in_folder_if_yes "$response" "$CLOUD_TOOLS_FOLDER"
+################################################################################
+
+################################################################################
+# Check OS.                                                              #
+################################################################################
+list_applications() {
+  case "${MACHINE}" in
+  Linux*)
+    printf '\n'
+    printf '%s\n' "git"
+    printf '%s\n' "docker"
+    printf '%s\n' "docker-machine"
+    printf '%s\n' "docker-compose"
+    printf '%s\n' "microk8s"
+    printf '%s\n' "aws-cli"
+    ;;
+  Darwin*)
+    MACHINE=Mac
+    printf '\n'
+    printf '%s\n' "xcode-select"
+    printf '%s\n' "brew"
+    printf '%s\n' "git"
+    printf '%s\n' "docker"
+    printf '%s\n' "aws-cli"
+    printf '%s\n' "watchman"
+    printf '%s\n' "openjdk8"
+    printf '%s\n' "android-sdk"
+    ;;
+  CYGWIN*)
+    MACHINE=Cygwin
+    ;;
+  MINGW*)
+    MACHINE=MinGw
+    ;;
+  *)
+    MACHINE="UNKNOWN:${uname_os}"
+    ;;
+  esac
+}
+
+install_iterative() {
+  case "${MACHINE}" in
+  Linux*)
+    snap login \
+    && bash "unix/linux/linux.sh"
+    ;;
+  Darwin*)
+    MACHINE=Mac
+    bash "unix/mac/mac.sh"
+    ;;
+  CYGWIN*)
+    MACHINE=Cygwin
+    echo "Your OS is not supported yet!"
+    ;;
+  MINGW*)
+    MACHINE=MinGw
+    echo "Your OS is not supported yet!"
+    ;;
+  *)
+    MACHINE="UNKNOWN:${uname_os}"
+    echo "Your OS is not supported yet!"
+    ;;
+  esac
+}
+
+################################################################################
+
+################################################################################
+# Initialize variables                                                         #
+################################################################################
+
+OPTION=""
+MACHINE=""
+
+################################################################################
+# Process the input options. Add options as needed.                            #
+################################################################################
+# Get the options
+
+check_os
+while getopts "hl" OPTION; do
+  case $OPTION in
+  h) # display Help
+    help
+    exit
+    ;;
+  l) # list available applications to install based on OS
+    list_applications
+    ;;
+  \?) # incorrect option
+    echo "ERROR: Invalid option"
+    exit
+    ;;
+  esac
+done
+
+install_iterative
