@@ -46,21 +46,24 @@ check_for_root() {
 ################################################################################
 check_os() {
   # If we are not running as root we exit the program
-  local uname_os
   uname_os="$(uname -s)"
   case "${uname_os}" in
   Linux*)
-    MACHINE=Linux
+    MACHINE="Linux"
     ;;
+
   Darwin*)
-    MACHINE=Mac
+    MACHINE="Mac"
     ;;
+
   CYGWIN*)
-    MACHINE=Cygwin
+    MACHINE="Cygwin"
     ;;
+
   MINGW*)
-    MACHINE=MinGw
+    MACHINE="MinGw"
     ;;
+
   *)
     MACHINE="UNKNOWN:${uname_os}"
     ;;
@@ -113,15 +116,15 @@ install_iterative() {
     snap login \
     && bash "unix/linux/linux.sh"
     ;;
-  Darwin*)
+  Mac*)
     MACHINE=Mac
     bash "unix/mac/mac.sh"
     ;;
-  CYGWIN*)
+  Mac*)
     MACHINE=Cygwin
     echo "Your OS is not supported yet!"
     ;;
-  MINGW*)
+  MinGw*)
     MACHINE=MinGw
     echo "Your OS is not supported yet!"
     ;;
