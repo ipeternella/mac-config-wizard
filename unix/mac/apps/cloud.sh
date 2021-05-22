@@ -6,7 +6,7 @@ source utils.sh
 
 # Cloud
 aws_cli_choice=$(check_for_command aws "AWS CLI")
-if [[ "${aws_cli_choice,,}" =~ ^(yes|y)$ ]]; then
+if [[ "${aws_cli_choice}" =~ ^(yes|y)$ ]]; then
   brew install awscli
   aws config
 fi

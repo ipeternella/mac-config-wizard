@@ -12,33 +12,39 @@ NO_COLOR="$(tput sgr0 2>/dev/null || printf '')"
 # Text formatters
 info() {
   printf '%s\n' "${BOLD}${GREY}>${NO_COLOR} $*"
+  printf ''
 }
 
 warning() {
   printf '%s\n' "${YELLOW}! $*${YELLOW}"
+  printf ''
 }
 
 error() {
   printf '%s\n' "${RED}x $*${RED}" >&2
+  printf ''
 }
 
 completed() {
   printf '%s\n' "${GREEN}✓${GREEN} $*"
+  printf ''
 }
 
 blue() {
   printf '%s\n' "${BLUE} $*"
+  printf ''
 }
 
 magenta() {
   printf '%s\n' "${MAGENTA} $*"
+  printf ''
 }
 
 check_for_command() {
   if ! hash "$1" &>/dev/null; then
     local choice
     read -rp "Do you want to install $2? [y/n] " choice
-    echo "$choice"
+    echo "$choice" | tr '[:upper:]' '[:lower:]'
   fi
 }
 
