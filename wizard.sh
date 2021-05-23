@@ -1,20 +1,49 @@
-#!/usr/bin/env bash
-source ./wizard/settings/settings.sh
-source ./wizard/utils/utils.sh
+#!/bin/bash
+#
+# The main entry point of the wizard installer.
 
-echo "Welcome to the MacOS Wizard for Software Engineers!"
+source "./wizard/settings.sh"  # exports definitions
+source "./wizard/utils.sh"
+source "./wizard/log.sh"
+source "./wizard/cmd/apps.sh"
+source "./wizard/cmd/help.sh"
+source "./wizard/cmd/install.sh"
 
-read -r -p "[WIZARD]: Install pre-requisites? " response
-execute_all_scripts_in_folder_if_yes "$response" "$PRE_REQUISITES_FOLDER"
+#######################################
+# Entrypoint for the wizard installer.
+# Globals:
+#   All globals exported by settings.sh
+# Arguments:
+#   "$@" - all arguments passed to the main.sh script
+#######################################
+main() {
+  local -r user_kernel="$(uname -s)"
+  
+  assert_kernel_is_supported "${user_kernel}"
+  local -r is_kernel_supported="$?"  # grabs last executed cmd status
 
-read -r -p "[WIZARD]: Install apps with GUI? " response
-execute_all_scripts_in_folder_if_yes "$response" "$APPS_FOLDER"
+  while getopts "hl" option; do
+    case "$option" in
+    h)
+      help
+      exit 0
+      ;;
+    l)
+      list_applications "${user_kernel}"
+      exit 0
+      ;;
+    *) 
+      help
+      exit 1 
+      ;;
+    esac
+  done
 
-read -r -p "[WIZARD]: Install software engineering tools? " response
-execute_all_scripts_in_folder_if_yes "$response" "$SOFTWARE_ENGINEERING_TOOLS_FOLDER"
+  if [[ "${is_kernel_supported}" -eq 1 ]]; then
+    fatal "Sorry, your OS kernel ${user_kernel} is not supported!"
+  fi
 
-read -r -p "[WIZARD]: Install K8s tools? " response
-execute_all_scripts_in_folder_if_yes "$response" "$K8S_TOOLS_FOLDER"
+  install_iterative "${user_kernel}"
+}
 
-read -r -p "[WIZARD]: Install cloud tools? " response
-execute_all_scripts_in_folder_if_yes "$response" "$CLOUD_TOOLS_FOLDER"
+main "$@"

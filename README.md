@@ -11,6 +11,12 @@ Solution? Invoke this shell wizard and it will:
 
 This automation tool can save you from wasting some several hours of configuration!
 
+## Contributing
+
+- Follow [Google's Shell Style Guide](https://google.github.io/styleguide/shellguide.html);
+- Centralize configurations and global variables on `wizard/settings.sh`;
+- Fork and PR!;
+
 ## Running the setup Wizard
 
 Clone this repo and run `wizard.sh` with bash:
