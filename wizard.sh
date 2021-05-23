@@ -18,9 +18,6 @@ source "./wizard/cmd/install.sh"
 #######################################
 main() {
   local -r user_kernel="$(uname -s)"
-  
-  assert_kernel_is_supported "${user_kernel}"
-  local -r is_kernel_supported="$?"  # grabs last executed cmd status
 
   while getopts "hl" option; do
     case "$option" in
@@ -38,8 +35,10 @@ main() {
       ;;
     esac
   done
+    
+  assert_kernel_is_supported "${user_kernel}"
 
-  if [[ "${is_kernel_supported}" -eq 1 ]]; then
+  if [[ "$?" -eq 1 ]]; then # grabs last executed command status code
     fatal "Sorry, your OS kernel ${user_kernel} is not supported!"
   fi
 

@@ -20,7 +20,7 @@ help() {
     -h: Displays help
     -l: Displays the available software that will be asked to be installed
 
-  Currently, the following OS kernels are supported:
+  Currently, the following 'flavors' of Unix kernels are supported:
 
-  -> ${SUPPORTED_UNIX_KERNELS[*]}"
+  - ${SUPPORTED_UNIX_KERNELS[*]}"
 }
