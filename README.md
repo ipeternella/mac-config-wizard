@@ -14,6 +14,7 @@ This automation tool can save you from wasting some several hours of configurati
 ## Contributing
 
 - Follow [Google's Shell Style Guide](https://google.github.io/styleguide/shellguide.html);
+- Lint the scripts with [Shellcheck](https://github.com/koalaman/shellcheck) (Supported by VSCode, etc.)
 - Centralize configurations and global variables on `wizard/settings.sh`;
 - Fork and PR!;
 
